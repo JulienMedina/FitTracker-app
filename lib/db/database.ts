@@ -1,4 +1,4 @@
-import { openDatabaseAsync, type SQLiteDatabase } from "expo-sqlite/next";
+import { openDatabaseAsync, type SQLiteDatabase } from "expo-sqlite";
 
 let dbInstance: SQLiteDatabase | null = null;
 

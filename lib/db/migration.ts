@@ -1,4 +1,4 @@
-import type { SQLiteDatabase } from "expo-sqlite/next";
+import type { SQLiteDatabase } from "expo-sqlite";
 
 type Migration = {
   version: number;
