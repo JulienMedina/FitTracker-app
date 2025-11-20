@@ -1,7 +1,9 @@
+import "../global.css";
+
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, LogBox, Text, View } from "react-native";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
@@ -12,6 +14,9 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+  // Silence the React Native deprecation warning (we already use react-native-safe-area-context through Expo Router)
+  LogBox.ignoreLogs(["SafeAreaView has been deprecated"]);
+
   const colorScheme = useColorScheme();
   const { ready, error } = useDatabaseReady();
 

@@ -70,6 +70,84 @@ const baseExercises: BaseExercise[] = [
     equipment: "Cable",
     muscleGroup: "Triceps",
   },
+  {
+    name: "Deadlift",
+    category: "Pull",
+    equipment: "Barbell",
+    muscleGroup: "Back",
+  },
+  {
+    name: "Lat Pulldown",
+    category: "Pull",
+    equipment: "Machine",
+    muscleGroup: "Back",
+  },
+  {
+    name: "Face Pull",
+    category: "Pull",
+    equipment: "Cable",
+    muscleGroup: "Rear Delts",
+  },
+  {
+    name: "Single-Arm Dumbbell Row",
+    category: "Pull",
+    equipment: "Dumbbells",
+    muscleGroup: "Back",
+  },
+  {
+    name: "Hip Thrust",
+    category: "Legs",
+    equipment: "Barbell",
+    muscleGroup: "Glutes",
+  },
+  {
+    name: "Leg Press",
+    category: "Legs",
+    equipment: "Machine",
+    muscleGroup: "Quadriceps",
+  },
+  {
+    name: "Lunge",
+    category: "Legs",
+    equipment: "Dumbbells",
+    muscleGroup: "Quadriceps",
+  },
+  {
+    name: "Calf Raise",
+    category: "Legs",
+    equipment: "Machine",
+    muscleGroup: "Calves",
+  },
+  {
+    name: "Plank",
+    category: "Core",
+    equipment: "Bodyweight",
+    muscleGroup: "Abs",
+  },
+  {
+    name: "Hanging Knee Raise",
+    category: "Core",
+    equipment: "Bodyweight",
+    muscleGroup: "Abs",
+  },
+  {
+    name: "Russian Twist",
+    category: "Core",
+    equipment: "Dumbbell",
+    muscleGroup: "Obliques",
+  },
+  {
+    name: "Farmer's Walk",
+    category: "Grip",
+    equipment: "Dumbbells",
+    muscleGroup: "Forearms",
+  },
+  {
+    name: "Push-Up",
+    category: "Push",
+    equipment: "Bodyweight",
+    muscleGroup: "Chest",
+  },
 ];
 
 export const runSeeds = async (db: SQLiteDatabase) => {
@@ -101,4 +179,10 @@ export const runSeeds = async (db: SQLiteDatabase) => {
     await db.execAsync("ROLLBACK");
     throw error;
   }
+};
+
+// Helper for development: clear and reseed the exercises table.
+export const resetExerciseSeeds = async (db: SQLiteDatabase) => {
+  await db.execAsync("DELETE FROM exercises;");
+  await runSeeds(db);
 };
