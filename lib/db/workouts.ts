@@ -2,7 +2,7 @@ import type { SQLiteDatabase } from "expo-sqlite";
 
 import { getDatabase } from "./database";
 import { generateId } from "../utils/id";
-import type { WorkoutSet } from "@/store/workoutStore";
+import type { WorkoutSet } from "@/store/workout-store";
 
 type PersistableState = {
   workoutId: string | null;

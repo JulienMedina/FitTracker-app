@@ -1,3 +1,3 @@
-export * from "./exerciseRepo";
-export * from "./workoutRepo";
-export * from "./setRepo";
+export * from "./exercise-repo";
+export * from "./workout-repo";
+export * from "./set-repo";

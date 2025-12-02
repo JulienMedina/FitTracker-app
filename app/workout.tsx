@@ -12,7 +12,7 @@ import {
 
 import { getAllExercises, searchExercises, type Exercise } from "@/lib/db/exercises";
 import { saveWorkoutFromState } from "@/lib/db/workouts";
-import { useWorkoutStore } from "@/store/workoutStore";
+import { useWorkoutStore } from "@/store/workout-store";
 
 const defaultSet = { weight: 40, reps: 10, rpe: 7.5 } as const;
 

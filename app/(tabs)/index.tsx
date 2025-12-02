@@ -11,15 +11,15 @@ import {
   View,
 } from "react-native";
 
-import { useHomeDashboard } from "@/hooks/useHomeDashboard";
-import type { CurrentWorkoutSummary } from "@/hooks/useHomeDashboard";
+import { useHomeDashboard } from "@/hooks/use-home-dashboard";
+import type { CurrentWorkoutSummary } from "@/hooks/use-home-dashboard";
 import type {
   PersonalRecordCard,
   ProgressPoint,
   ProgressRange,
   QuickAction,
 } from "@/lib/home/types";
-import { useWorkoutStore } from "@/store/workoutStore";
+import { useWorkoutStore } from "@/store/workout-store";
 
 const rangeOptions: ProgressRange[] = ["7d", "14d", "28d"];
 

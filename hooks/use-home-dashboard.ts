@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { fetchMockDashboard } from "@/lib/home/mockDashboard";
+import { fetchMockDashboard } from "@/lib/home/mock-dashboard";
 import type {
   HomeDashboardPayload,
   ProgressRange,
 } from "@/lib/home/types";
-import { useWorkoutStore } from "@/store/workoutStore";
+import { useWorkoutStore } from "@/store/workout-store";
 
 export type HomeDashboardData = HomeDashboardPayload & {
   headerDateLabel: string;
