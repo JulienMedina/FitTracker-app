@@ -38,7 +38,6 @@ const migrations: Migration[] = [
            setIndex INTEGER NOT NULL,
            weight REAL,
            reps INTEGER,
-           rpe REAL,
            restSeconds INTEGER,
          notes TEXT
        );`,
