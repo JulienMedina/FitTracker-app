@@ -21,7 +21,6 @@ export type WorkoutSet = {
   setIndex: number;
   weight?: number;
   reps?: number;
-  rpe?: number;
   restSeconds?: number;
   notes?: string;
 };

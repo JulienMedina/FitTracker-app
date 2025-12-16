@@ -14,7 +14,7 @@ import { getAllExercises, searchExercises, type Exercise } from "@/lib/db/exerci
 import { saveWorkoutFromState } from "@/lib/db/workouts";
 import { useWorkoutStore } from "@/store/workout-store";
 
-const defaultSet = { weight: 40, reps: 10, rpe: 7.5 } as const;
+const defaultSet = { weight: 40, reps: 10 } as const;
 
 export default function WorkoutScreen() {
   const startWorkout = useWorkoutStore((state) => state.startWorkout);
@@ -66,17 +66,16 @@ export default function WorkoutScreen() {
   const adjustSetValue = (
     exerciseId: string,
     setId: string,
-    field: "weight" | "reps" | "rpe",
+    field: "weight" | "reps",
     delta: number
   ) => {
     const sets = setsByExercise[exerciseId] ?? [];
     const target = sets.find((item) => item.id === setId);
     if (!target) return;
 
-    const decimalsMap = { weight: 1, reps: 0, rpe: 1 } as const;
+    const decimalsMap = { weight: 1, reps: 0 } as const;
     const next = (target[field] ?? 0) + delta;
-    const clamped =
-      field === "rpe" ? Math.min(Math.max(next, 0), 10) : Math.max(next, 0);
+    const clamped = Math.max(next, 0);
 
     const rounded = Number(clamped.toFixed(decimalsMap[field]));
     updateSet(exerciseId, setId, { [field]: rounded });
@@ -85,15 +84,14 @@ export default function WorkoutScreen() {
   const setSetValueFromInput = (
     exerciseId: string,
     setId: string,
-    field: "weight" | "reps" | "rpe",
+    field: "weight" | "reps",
     raw: string
   ) => {
     const parsed = field === "reps" ? parseInt(raw, 10) : parseFloat(raw);
     if (!Number.isFinite(parsed)) return;
 
-    const decimalsMap = { weight: 1, reps: 0, rpe: 1 } as const;
-    const clamped =
-      field === "rpe" ? Math.min(Math.max(parsed, 0), 10) : Math.max(parsed, 0);
+    const decimalsMap = { weight: 1, reps: 0 } as const;
+    const clamped = Math.max(parsed, 0);
     const rounded = Number(clamped.toFixed(decimalsMap[field]));
     updateSet(exerciseId, setId, { [field]: rounded });
   };
@@ -274,14 +272,6 @@ export default function WorkoutScreen() {
                           onMinus={() => adjustSetValue(exerciseId, set.id, "reps", -1)}
                           onPlus={() => adjustSetValue(exerciseId, set.id, "reps", 1)}
                           onChangeValue={(text) => setSetValueFromInput(exerciseId, set.id, "reps", text)}
-                        />
-                        <Stepper
-                          label="RPE"
-                          value={set.rpe ?? 0}
-                          onMinus={() => adjustSetValue(exerciseId, set.id, "rpe", -0.5)}
-                          onPlus={() => adjustSetValue(exerciseId, set.id, "rpe", 0.5)}
-                          decimals={1}
-                          onChangeValue={(text) => setSetValueFromInput(exerciseId, set.id, "rpe", text)}
                         />
                       </View>
                     </View>

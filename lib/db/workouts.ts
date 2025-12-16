@@ -53,7 +53,6 @@ export const saveWorkoutFromState = async (
           setIndex: set.setIndex ?? setIndex,
           weight: set.weight ?? null,
           reps: set.reps ?? null,
-          rpe: set.rpe ?? null,
           restSeconds: set.restSeconds ?? null,
           notes: set.notes ?? null,
         });
@@ -119,20 +118,18 @@ const insertSet = async (
     setIndex: number;
     weight: number | null;
     reps: number | null;
-    rpe: number | null;
     restSeconds: number | null;
     notes: string | null;
   }
 ) => {
   await db.runAsync(
-    `INSERT INTO sets (id, workoutExerciseId, setIndex, weight, reps, rpe, restSeconds, notes)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+    `INSERT INTO sets (id, workoutExerciseId, setIndex, weight, reps, restSeconds, notes)
+     VALUES (?, ?, ?, ?, ?, ?, ?);`,
     params.id,
     params.workoutExerciseId,
     params.setIndex,
     params.weight,
     params.reps,
-    params.rpe,
     params.restSeconds,
     params.notes
   );
