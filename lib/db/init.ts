@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getDatabase } from "./database";
 import { runMigrations } from "./migration";
+import { runSeeds } from "./seed";
 
 export const initDatabase = async () => {
   const db = await getDatabase();
   await runMigrations(db);
+  await runSeeds(db);
   return db;
 };
 
