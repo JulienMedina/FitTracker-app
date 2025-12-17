@@ -23,10 +23,10 @@ export default function RootLayout() {
   if (error) {
     return (
       <View className="flex-1 items-center justify-center bg-black/90 px-6">
-        <Text className="mb-2 text-center text-lg font-semibold text-white">
+        <Text className="mb-2 text-center text-lg font-semibold text-accent">
           Impossible d'initialiser la base locale
         </Text>
-        <Text className="text-center text-base text-white/70">{error.message}</Text>
+        <Text className="text-center text-base text-light/70">{error.message}</Text>
       </View>
     );
   }
@@ -35,7 +35,7 @@ export default function RootLayout() {
     return (
       <View className="flex-1 items-center justify-center bg-black">
         <ActivityIndicator size="large" color="#ffffff" />
-        <Text className="mt-4 text-base text-white/80">Préparation de l'app...</Text>
+        <Text className="mt-4 text-base text-light/80">Préparation de l'app...</Text>
       </View>
     );
   }

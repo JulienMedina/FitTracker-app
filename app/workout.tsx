@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/colors";
 import {
   ActivityIndicator,
   Alert,
@@ -130,12 +131,12 @@ export default function WorkoutScreen() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-[#050814]" contentContainerStyle={{ padding: 16, paddingBottom: 48 }}>
+    <ScrollView className="flex-1 bg-dark" contentContainerStyle={{ padding: 16, paddingBottom: 48 }}>
       <View className="mb-4 flex-row items-center justify-between">
-        <Text className="text-2xl font-semibold text-white">Séance</Text>
+        <Text className="text-2xl font-semibold text-accent">Séance</Text>
         <Pressable
           className={`flex-row items-center gap-2 rounded-2xl px-4 py-2 ${
-            isActive ? "bg-[#172137]" : "bg-[#39FF88]"
+            isActive ? "bg-border" : "bg-highlight"
           }`}
           onPress={() => {
             if (!isActive) {
@@ -144,10 +145,10 @@ export default function WorkoutScreen() {
           }}
           disabled={isActive}
         >
-          <Ionicons name="play" size={18} color={isActive ? "#9FB3C8" : "#050814"} />
+          <Ionicons name="play" size={18} color={isActive ? Colors.muted : Colors.highlight} />
           <Text
             className={`text-sm font-semibold ${
-              isActive ? "text-[#9FB3C8]" : "text-[#050814]"
+              isActive ? "text-muted" : "text-dark"
             }`}
           >
             {isActive ? "En cours" : "Démarrer"}
@@ -156,51 +157,51 @@ export default function WorkoutScreen() {
       </View>
 
       <Pressable
-        className="mb-4 flex-row items-center justify-center gap-2 rounded-2xl border border-[#172137] bg-[#0B1020] px-4 py-3"
+        className="mb-4 flex-row items-center justify-center gap-2 rounded-2xl border border-border bg-dark px-4 py-3"
         onPress={handleFinish}
         disabled={saving}
       >
-        <Ionicons name="stop-circle" size={18} color={saving ? "#9FB3C8" : "#FF6B6B"} />
-        <Text className="text-sm font-semibold text-[#E6F0FF]">
+        <Ionicons name="stop-circle" size={18} color={saving ? Colors.muted : Colors.error} />
+        <Text className="text-sm font-semibold text-light">
           {saving ? "Enregistrement..." : "Terminer la séance"}
         </Text>
       </Pressable>
 
       <Pressable
-        className="mb-3 flex-row items-center gap-2 rounded-2xl border border-[#172137] bg-[#0B1020] px-4 py-3"
+        className="mb-3 flex-row items-center gap-2 rounded-2xl border border-border bg-dark px-4 py-3"
         onPress={() => setShowPicker((prev) => !prev)}
       >
-        <Ionicons name="add-circle-outline" size={20} color="#39FF88" />
-        <Text className="text-base text-white">Ajouter un exercice</Text>
+        <Ionicons name="add-circle-outline" size={20} color={Colors.highlight} />
+        <Text className="text-base text-light">Ajouter un exercice</Text>
       </Pressable>
 
       {showPicker ? (
-        <View className="mb-4 rounded-2xl border border-[#172137] bg-[#0B1020] p-3">
+        <View className="mb-4 rounded-2xl border border-border bg-dark p-3">
           <TextInput
             placeholder="Rechercher (bench, squat...)"
-            placeholderTextColor="#9FB3C8"
+            placeholderTextColor="muted"
             value={query}
             onChangeText={setQuery}
-            className="mb-3 rounded-xl border border-[#172137] bg-[#0B0F1C] px-3 py-2 text-white"
+            className="mb-3 rounded-xl border border-border bg-card px-3 py-2 text-light"
           />
           {loading ? (
             <View className="items-center py-6">
-              <ActivityIndicator color="#39FF88" />
+              <ActivityIndicator color="highlight" />
             </View>
           ) : (
             exercises.map((exercise) => (
               <Pressable
                 key={exercise.id}
-                className="mb-2 flex-row items-center justify-between rounded-xl bg-[#0B1020] px-3 py-3"
+                className="mb-2 flex-row items-center justify-between rounded-xl bg-dark px-3 py-3"
                 onPress={() => handleAddExercise(exercise)}
               >
                 <View>
-                  <Text className="text-white">{exercise.name}</Text>
-                  <Text className="text-xs uppercase text-[#9FB3C8]">
+                  <Text className="text-light">{exercise.name}</Text>
+                  <Text className="text-xs uppercase text-muted">
                     {[exercise.category, exercise.muscleGroup].filter(Boolean).join(" · ")}
                   </Text>
                 </View>
-                <Ionicons name="add" size={18} color="#39FF88" />
+                <Ionicons name="add" size={18} color={Colors.highlight} />
               </Pressable>
             ))
           )}
@@ -209,7 +210,7 @@ export default function WorkoutScreen() {
 
       {exerciseIds.length === 0 ? (
         <View className="mt-8 items-center">
-          <Text className="text-center text-base text-[#9FB3C8]">
+          <Text className="text-center text-base text-muted">
             Ajoute un exercice pour démarrer une série.
           </Text>
         </View>
@@ -219,16 +220,16 @@ export default function WorkoutScreen() {
           const exercise = exercises.find((item) => item.id === exerciseId);
           const isOpen = openExercises[exerciseId] ?? true;
           return (
-            <View key={exerciseId} className="mb-4 rounded-2xl border border-[#172137] bg-[#0B1020] p-4">
+            <View key={exerciseId} className="mb-4 rounded-2xl border border-border bg-dark p-4">
               <Pressable
                 onPress={() => toggleExercise(exerciseId)}
                 className="flex-row items-center justify-between"
               >
                 <View>
-                  <Text className="text-lg font-semibold text-white">
+                  <Text className="text-lg font-semibold text-accent">
                     {exercise?.name ?? "Exercice"}
                   </Text>
-                  <Text className="text-xs uppercase text-[#9FB3C8]">
+                  <Text className="text-xs uppercase text-muted">
                     {sets.length} série{sets.length > 1 ? "s" : ""} •{' '}
                     {[exercise?.category, exercise?.muscleGroup].filter(Boolean).join(" · ")}
                   </Text>
@@ -236,7 +237,7 @@ export default function WorkoutScreen() {
                 <Ionicons
                   name={isOpen ? "chevron-up" : "chevron-down"}
                   size={18}
-                  color="#9FB3C8"
+                  color="muted"
                 />
               </Pressable>
 
@@ -245,10 +246,10 @@ export default function WorkoutScreen() {
                   {sets.map((set, index) => (
                     <View
                       key={set.id}
-                      className="w-full rounded-xl border border-[#172137] bg-[#0B0F1C] px-3 py-3"
+                      className="w-full rounded-xl border border-border bg-card px-3 py-3"
                     >
                       <View className="mb-2 flex-row items-center justify-between">
-                        <Text className="text-sm font-semibold text-white">Série {index + 1}</Text>
+                        <Text className="text-sm font-semibold text-accent">Série {index + 1}</Text>
                         <Pressable
                           onPress={() => handleRemoveSet(exerciseId, set.id)}
                           hitSlop={10}
@@ -277,11 +278,11 @@ export default function WorkoutScreen() {
                     </View>
                   ))}
                   <Pressable
-                    className="h-[72px] w-[72px] items-center justify-center rounded-xl border border-dashed border-[#39FF88]/80"
+                    className="h-[72px] w-[72px] items-center justify-center rounded-xl border border-dashed border-highlight/80"
                     onPress={() => addSet(exerciseId, defaultSet)}
                   >
-                    <Ionicons name="add" size={20} color="#39FF88" />
-                    <Text className="text-xs text-[#39FF88]">Série</Text>
+                    <Ionicons name="add" size={20} color={Colors.highlight} />
+                    <Text className="text-xs text-highlight">Série</Text>
                   </Pressable>
                 </View>
               ) : null}
@@ -321,33 +322,33 @@ const Stepper = ({
   };
 
   return (
-    <View className="flex-row items-center rounded-xl border border-[#172137] bg-[#0B1020] px-3 py-2">
+    <View className="flex-row items-center rounded-xl border border-border bg-dark px-3 py-2">
       <Pressable
-        className="h-8 w-8 items-center justify-center rounded-lg bg-[#0B0F1C] border border-[#172137]"
+        className="h-8 w-8 items-center justify-center rounded-lg bg-card border border-border"
         onPress={onMinus}
         hitSlop={8}
       >
-        <Ionicons name="remove" size={16} color="#E6F0FF" />
+        <Ionicons name="remove" size={16} color={Colors.muted} />
       </Pressable>
       <View className="mx-3 w-20">
-        <Text className="text-xs uppercase text-[#9FB3C8]">{label}</Text>
+        <Text className="text-xs uppercase text-muted">{label}</Text>
         <TextInput
-          className="text-lg font-semibold text-white"
+          className="text-lg font-semibold text-light"
           value={textValue}
           onChangeText={setTextValue}
           onBlur={commit}
           onSubmitEditing={commit}
           keyboardType="decimal-pad"
-          placeholderTextColor="#9FB3C8"
+          placeholderTextColor="muted"
         />
-        {unit ? <Text className="text-xs text-[#9FB3C8]">{unit}</Text> : null}
+        {unit ? <Text className="text-xs text-muted">{unit}</Text> : null}
       </View>
       <Pressable
-        className="h-8 w-8 items-center justify-center rounded-lg bg-[#39FF88]/20 border border-[#39FF88]/60"
+        className="h-8 w-8 items-center justify-center rounded-lg bg-highlight/20 border border-highlight/60"
         onPress={onPlus}
         hitSlop={8}
       >
-        <Ionicons name="add" size={16} color="#39FF88" />
+        <Ionicons name="add" size={16} color={Colors.highlight} />
       </Pressable>
     </View>
   );

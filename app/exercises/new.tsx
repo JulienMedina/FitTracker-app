@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/colors";
 import {
   Pressable,
   ScrollView,
@@ -71,21 +72,21 @@ export default function NewExerciseScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-[#050814]"
+      className="flex-1 bg-dark"
       contentContainerStyle={{ padding: 16, paddingBottom: 48 }}
     >
       <Pressable
         className="mb-4 flex-row items-center gap-2"
         onPress={() => router.back()}
       >
-        <Ionicons name="arrow-back" size={20} color="#E6F0FF" />
-        <Text className="text-base text-[#E6F0FF]">Retour</Text>
+        <Ionicons name="arrow-back" size={20} color={Colors.accent} />
+        <Text className="text-base text-light">Retour</Text>
       </Pressable>
 
-      <Text className="text-2xl font-semibold text-[#E6F0FF] mb-2">
+      <Text className="text-2xl font-semibold text-accent mb-2">
         Ajouter un exercice
       </Text>
-      <Text className="text-sm text-[#9FB3C8] mb-4">
+      <Text className="text-sm text-muted mb-4">
         Prochainement : sauvegarde dans la base locale et réutilisation dans tes séances.
       </Text>
 
@@ -119,11 +120,11 @@ export default function NewExerciseScreen() {
       />
 
       <Pressable
-        className="mt-6 h-12 items-center justify-center rounded-2xl bg-[#39FF88]"
+        className="mt-6 h-12 items-center justify-center rounded-2xl bg-highlight"
         onPress={handleSave}
         disabled={saving}
       >
-        <Text className="text-base font-semibold text-[#050814]">
+        <Text className="text-base font-semibold text-dark">
           {saving ? "Enregistrement..." : "Enregistrer"}
         </Text>
       </Pressable>
@@ -143,11 +144,11 @@ const Field = ({
   onChangeText: (text: string) => void;
 }) => (
   <View className="mb-4">
-    <Text className="mb-2 text-sm font-semibold text-[#E6F0FF]">{label}</Text>
+    <Text className="mb-2 text-sm font-semibold text-light">{label}</Text>
     <TextInput
-      className="rounded-xl border border-[#172137] bg-[#0B1020] px-3 py-2 text-white"
+      className="rounded-xl border border-border bg-dark px-3 py-2 text-light"
       placeholder={placeholder}
-      placeholderTextColor="#9FB3C8"
+      placeholderTextColor="muted"
       value={value}
       onChangeText={onChangeText}
     />
@@ -158,7 +159,7 @@ const FeedbackBanner = ({ type, message }: { type: "success" | "error"; message:
   <View
     className={`mb-4 rounded-2xl border px-4 py-3 ${
       type === "success"
-        ? "border-[#1f4731] bg-[#0e1c15]"
+        ? "border-positive bg-positive/20"
         : "border-[#47241f] bg-[#1c0f0e]"
     }`}
   >
@@ -166,9 +167,9 @@ const FeedbackBanner = ({ type, message }: { type: "success" | "error"; message:
       <Ionicons
         name={type === "success" ? "checkmark-circle" : "alert-circle"}
         size={18}
-        color={type === "success" ? "#39FF88" : "#FF6B6B"}
+        color={type === "success" ? Colors.highlight : Colors.error}
       />
-      <Text className="text-sm font-semibold text-[#E6F0FF]">{message}</Text>
+      <Text className="text-sm font-semibold text-light">{message}</Text>
     </View>
   </View>
 );
