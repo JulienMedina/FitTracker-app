@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@/constants/colors";
 import type { ReactNode } from "react";
 import { useRouter } from "expo-router";
 import {
@@ -52,9 +53,9 @@ export default function HomeScreen() {
 
   if (loading && !data) {
     return (
-      <View className="flex-1 items-center justify-center bg-[#050814]">
-        <ActivityIndicator size="large" color="#39FF88" />
-        <Text className="mt-4 text-base text-[#9FB3C8]">
+      <View className="flex-1 items-center justify-center bg-dark">
+        <ActivityIndicator size="large" color="highlight" />
+        <Text className="mt-4 text-base text-muted">
           Préparation du tableau de bord...
         </Text>
       </View>
@@ -63,18 +64,18 @@ export default function HomeScreen() {
 
   if (error && !data) {
     return (
-      <View className="flex-1 items-center justify-center bg-[#050814] px-8">
-        <Text className="text-center text-lg font-semibold text-[#E6F0FF]">
+      <View className="flex-1 items-center justify-center bg-dark px-8">
+        <Text className="text-center text-lg font-semibold text-accent">
           Impossible de charger les données
         </Text>
-        <Text className="mt-2 text-center text-sm text-[#9FB3C8]">
+        <Text className="mt-2 text-center text-sm text-muted">
           {error.message}
         </Text>
         <Pressable
-          className="mt-6 rounded-2xl bg-[#39FF88] px-6 py-3"
+          className="mt-6 rounded-2xl bg-highlight px-6 py-3"
           onPress={refresh}
         >
-          <Text className="text-base font-semibold text-[#050814]">
+          <Text className="text-base font-semibold text-dark">
             Réessayer
           </Text>
         </Pressable>
@@ -84,7 +85,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView
-      className="flex-1 bg-[#050814]"
+      className="flex-1 bg-dark"
       contentInsetAdjustmentBehavior="always"
       contentContainerStyle={{
         paddingBottom: 32,
@@ -93,18 +94,18 @@ export default function HomeScreen() {
       <View className="px-5 pt-12 pb-6">
         <View className="flex-row items-start justify-between">
           <View>
-            <Text className="text-3xl font-semibold text-[#E6F0FF]">
+            <Text className="text-3xl font-semibold text-accent">
               Athletica
             </Text>
-            <Text className="mt-1 text-sm text-[#9FB3C8]">
+            <Text className="mt-1 text-sm text-muted">
               {data?.headerDateLabel ?? ""}
             </Text>
           </View>
           <Pressable
-            className="h-12 w-12 items-center justify-center rounded-2xl border border-[#172137] bg-[#0B1020]"
+            className="h-12 w-12 items-center justify-center rounded-2xl border border-border bg-dark"
             onPress={handleSettings}
           >
-            <Ionicons name="settings-outline" size={22} color="#E6F0FF" />
+            <Ionicons name="settings-outline" size={22} color={Colors.accent} />
           </Pressable>
         </View>
       </View>
@@ -129,20 +130,20 @@ export default function HomeScreen() {
           onAction={() => router.push("/history")}
         >
           <Card>
-            <Text className="text-sm uppercase text-[#39FF88]">
+            <Text className="text-sm uppercase text-highlight">
               {data.lastWorkout.dateLabel}
             </Text>
-            <Text className="mt-2 text-2xl font-semibold text-[#E6F0FF]">
+            <Text className="mt-2 text-2xl font-semibold text-accent">
               {formatDuration(data.lastWorkout.durationMinutes)} · {formatWeight(data.lastWorkout.volumeKg)}
             </Text>
-            <Text className="mt-3 text-sm text-[#9FB3C8]">Exercices clés</Text>
+            <Text className="mt-3 text-sm text-muted">Exercices clés</Text>
             <View className="mt-2 flex-row flex-wrap gap-2">
               {data.lastWorkout.topExercises.map((exercise) => (
                 <View
                   key={exercise}
-                  className="rounded-full bg-[#10172A] px-3 py-1"
+                  className="rounded-full bg-card px-3 py-1"
                 >
-                  <Text className="text-xs text-[#E6F0FF]">{exercise}</Text>
+                  <Text className="text-xs text-light">{exercise}</Text>
                 </View>
               ))}
             </View>
@@ -162,12 +163,12 @@ export default function HomeScreen() {
           />
           <MiniBars points={data.progress.points} />
           <View className="mt-4 flex-row items-center justify-between">
-            <Text className="text-base text-[#E6F0FF]">
+            <Text className="text-base text-light">
               {formatWeight(data.progress.totalVolume)} cumulés
             </Text>
             <Text
               className={`text-sm font-semibold ${
-                data.progress.changePercentage >= 0 ? "text-[#39FF88]" : "text-[#FF6B6B]"
+                data.progress.changePercentage >= 0 ? "text-highlight" : "text-[#FF6B6B]"
               }`}
             >
               {data.progress.changePercentage >= 0 ? "+" : ""}
@@ -202,28 +203,28 @@ const CurrentWorkoutCard = ({
   summary: CurrentWorkoutSummary;
   onResume: () => void;
 }) => (
-  <View className="mx-5 mb-4 rounded-3xl border border-[#172137] bg-[#0B1020] p-5">
-    <Text className="text-sm uppercase text-[#39FF88]">Séance en cours</Text>
+  <View className="mx-5 mb-4 rounded-3xl border border-border bg-dark p-5">
+    <Text className="text-sm uppercase text-highlight">Séance en cours</Text>
     <View className="mt-4 flex-row justify-between">
       <Stat label="Exercices" value={summary.exerciseCount.toString()} />
       <Stat label="Séries" value={summary.setCount.toString()} />
       <Stat label="Durée" value={`${summary.elapsedMinutes.toString()} min`} />
     </View>
     <Pressable
-      className="mt-6 h-12 items-center justify-center rounded-2xl bg-[#39FF88]"
+      className="mt-6 h-12 items-center justify-center rounded-2xl bg-highlight"
       onPress={onResume}
     >
-      <Text className="text-base font-semibold text-[#050814]">Reprendre</Text>
+      <Text className="text-base font-semibold text-dark">Reprendre</Text>
     </Pressable>
   </View>
 );
 
 const PrimaryCTA = ({ onPress }: { onPress: () => void }) => (
   <Pressable
-    className="mx-5 mb-6 h-14 items-center justify-center rounded-3xl bg-[#39FF88]"
+    className="mx-5 mb-6 h-14 items-center justify-center rounded-3xl bg-highlight"
     onPress={onPress}
   >
-    <Text className="text-lg font-semibold text-[#050814]">
+    <Text className="text-lg font-semibold text-dark">
       Commencer une séance
     </Text>
   </Pressable>
@@ -242,10 +243,10 @@ const Section = ({
 }) => (
   <View className="mb-6 px-5">
     <View className="mb-3 flex-row items-center justify-between">
-      <Text className="text-lg font-semibold text-[#E6F0FF]">{title}</Text>
+      <Text className="text-lg font-semibold text-accent">{title}</Text>
       {actionLabel ? (
         <Pressable onPress={onAction}>
-          <Text className="text-sm text-[#39FF88]">{actionLabel}</Text>
+          <Text className="text-sm text-highlight">{actionLabel}</Text>
         </Pressable>
       ) : null}
     </View>
@@ -254,15 +255,15 @@ const Section = ({
 );
 
 const Card = ({ children }: { children: ReactNode }) => (
-  <View className="rounded-3xl border border-[#172137] bg-[#0B1020] p-5">
+  <View className="rounded-3xl border border-border bg-dark p-5">
     {children}
   </View>
 );
 
 const Stat = ({ label, value }: { label: string; value: string }) => (
   <View>
-    <Text className="text-xs text-[#9FB3C8]">{label}</Text>
-    <Text className="mt-1 text-xl font-semibold text-[#E6F0FF]">{value}</Text>
+    <Text className="text-xs text-muted">{label}</Text>
+    <Text className="mt-1 text-xl font-semibold text-accent">{value}</Text>
   </View>
 );
 
@@ -282,13 +283,13 @@ const RangeSelector = ({
         <Pressable
           key={option}
           className={`flex-1 items-center rounded-2xl border px-3 py-2 ${
-            isActive ? "border-transparent bg-[#39FF88]" : "border-[#172137] bg-[#0B1020]"
+            isActive ? "border-transparent bg-highlight" : "border-border bg-dark"
           }`}
           onPress={() => onSelect(option)}
         >
           <Text
             className={`text-sm font-medium ${
-              isActive ? "text-[#050814]" : "text-[#E6F0FF]"
+              isActive ? "text-dark" : "text-light"
             }`}
           >
             {option.toUpperCase()}
@@ -311,7 +312,7 @@ const MiniBars = ({ points }: { points: ProgressPoint[] }) => {
               className="w-full rounded-2xl"
               style={{ height, backgroundColor: "#39FF88" }}
             />
-            <Text className="mt-2 text-xs text-[#9FB3C8]">{point.label}</Text>
+            <Text className="mt-2 text-xs text-muted">{point.label}</Text>
           </View>
         );
       })}
@@ -323,7 +324,7 @@ const PRCarousel = ({ prs }: { prs: PersonalRecordCard[] }) => {
   if (prs.length === 0) {
     return (
       <Card>
-        <Text className="text-center text-sm text-[#9FB3C8]">
+        <Text className="text-center text-sm text-muted">
           Aucun record pour le moment.
         </Text>
       </Card>
@@ -338,14 +339,14 @@ const PRCarousel = ({ prs }: { prs: PersonalRecordCard[] }) => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ paddingRight: 20 }}
       renderItem={({ item }) => (
-        <View className="mr-4 w-48 rounded-3xl border border-[#172137] bg-[#0B1020] p-4">
-          <Text className="text-xs text-[#9FB3C8]">{item.dateLabel}</Text>
-          <Text className="mt-2 text-lg font-semibold text-[#E6F0FF]">
+        <View className="mr-4 w-48 rounded-3xl border border-border bg-dark p-4">
+          <Text className="text-xs text-muted">{item.dateLabel}</Text>
+          <Text className="mt-2 text-lg font-semibold text-light">
             {item.exercise}
           </Text>
-          <Text className="mt-4 text-3xl font-bold text-[#39FF88]">
+          <Text className="mt-4 text-3xl font-bold text-highlight">
             {item.bestValue}
-            <Text className="text-base font-semibold text-[#9FB3C8]">
+            <Text className="text-base font-semibold text-muted">
               {" "}
               {item.unit}
             </Text>
@@ -367,32 +368,32 @@ const QuickActionsGrid = ({
     {actions.map((action) => (
       <Pressable
         key={action.id}
-        className="w-[48%] rounded-3xl border border-[#172137] bg-[#0B1020] p-4"
+        className="w-[48%] rounded-3xl border border-border bg-dark p-4"
         onPress={() => onPressAction(action)}
       >
-        <Ionicons name={action.icon as any} size={24} color="#39FF88" />
-        <Text className="mt-3 text-base font-semibold text-[#E6F0FF]">
+        <Ionicons name={action.icon as any} size={24} color={Colors.highlight} />
+        <Text className="mt-3 text-base font-semibold text-accent">
           {action.label}
         </Text>
-        <Text className="mt-1 text-sm text-[#9FB3C8]">{action.subLabel}</Text>
+        <Text className="mt-1 text-sm text-muted">{action.subLabel}</Text>
       </Pressable>
     ))}
   </View>
 );
 
 const EmptyHomeState = ({ onStart }: { onStart: () => void }) => (
-  <View className="mx-5 mb-6 rounded-3xl border border-dashed border-[#172137] bg-[#0B1020] p-6">
-    <Text className="text-xl font-semibold text-[#E6F0FF]">
+  <View className="mx-5 mb-6 rounded-3xl border border-dashed border-border bg-dark p-6">
+    <Text className="text-xl font-semibold text-accent">
       Prêt à suivre tes entraînements ?
     </Text>
-    <Text className="mt-2 text-sm text-[#9FB3C8]">
+    <Text className="mt-2 text-sm text-muted">
       Crée un exercice ou démarre ta première séance pour remplir ton dashboard.
     </Text>
     <Pressable
-      className="mt-4 h-12 items-center justify-center rounded-2xl bg-[#39FF88]"
+      className="mt-4 h-12 items-center justify-center rounded-2xl bg-highlight"
       onPress={onStart}
     >
-      <Text className="text-base font-semibold text-[#050814]">
+      <Text className="text-base font-semibold text-dark">
         Commencer une séance
       </Text>
     </Pressable>
